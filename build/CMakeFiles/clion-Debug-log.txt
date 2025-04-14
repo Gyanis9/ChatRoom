@@ -1,0 +1,31 @@
+/home/study/.cache/JetBrains/RemoteDev/dist/7e91c9460ef4d_CLion-251.23774.202/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/study/.cache/JetBrains/RemoteDev/dist/7e91c9460ef4d_CLion-251.23774.202/bin/ninja/linux/x64/ninja -DCMAKE_TOOLCHAIN_FILE=/home/study/vcpkg/scripts/buildsystems/vcpkg.cmake -G Ninja -S /home/study/projects/ChatRoom -B /home/study/projects/ChatRoom/build
+CMake Error at CMakeLists.txt:8 (add_subdirectory):
+  add_subdirectory given source "/home/study/projects/ChatRoom/Gyanis" which
+  is not an existing directory.
+
+
+CMake Error at CMakeLists.txt:11 (include):
+  include could not find requested file:
+
+    Gyanis/cmake/utils.cmake
+
+
+-- Found libevent include directory: /home/study/vcpkg/installed/x64-linux/include
+-- Found libevent component: /home/study/vcpkg/installed/x64-linux/debug/lib/libevent_cored.a
+-- Found libevent component: /home/study/vcpkg/installed/x64-linux/lib/libevent_core.a
+-- Found libevent component: /home/study/vcpkg/installed/x64-linux/debug/lib/libevent_extrad.a
+-- Found libevent component: /home/study/vcpkg/installed/x64-linux/lib/libevent_extra.a
+-- Found libevent component: /home/study/vcpkg/installed/x64-linux/debug/lib/libevent_pthreadsd.a
+-- Found libevent component: /home/study/vcpkg/installed/x64-linux/lib/libevent_pthreads.a
+-- Found libevent 2.2.0 in /home/study/vcpkg/installed/x64-linux
+CMake Error at CMakeLists.txt:76 (include):
+  include could not find requested file:
+
+    Gyanis/cmake/utils.cmake
+
+
+CMake Error at CMakeLists.txt:95 (force_redefine_file_macro_for_sources):
+  Unknown CMake command "force_redefine_file_macro_for_sources".
+
+
+-- Configuring incomplete, errors occurred!

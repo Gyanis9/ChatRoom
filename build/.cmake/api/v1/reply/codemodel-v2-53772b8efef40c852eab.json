@@ -1,0 +1,138 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "Gyanis",
+					"jsonFile" : "directory-Gyanis-Debug-b5edbe9f1ed58119d1de.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "Gyanis",
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ChatRoom",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "Gyanis",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ChatRoom::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ChatRoom-Debug-7f3279e479c9fa6996d2.json",
+					"name" : "ChatRoom",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "Gyanis::@ead756eac493b6af0a8d",
+					"jsonFile" : "target-Gyanis-Debug-0371891ec62747306bc2.json",
+					"name" : "Gyanis",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "base::@ead756eac493b6af0a8d",
+					"jsonFile" : "target-base-Debug-5c5fa3c7a34a2cad56a6.json",
+					"name" : "base",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "core::@ead756eac493b6af0a8d",
+					"jsonFile" : "target-core-Debug-cc8d69880e6b9c41026a.json",
+					"name" : "core",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "db::@ead756eac493b6af0a8d",
+					"jsonFile" : "target-db-Debug-10b28f5b04bd77bdbe9b.json",
+					"name" : "db",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "net::@ead756eac493b6af0a8d",
+					"jsonFile" : "target-net-Debug-a434aadd03f3d41ce678.json",
+					"name" : "net",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/study/projects/ChatRoom/build",
+		"source" : "/home/study/projects/ChatRoom"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

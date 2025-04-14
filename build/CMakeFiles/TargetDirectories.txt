@@ -1,0 +1,10 @@
+/home/study/projects/ChatRoom/build/CMakeFiles/ChatRoom.dir
+/home/study/projects/ChatRoom/build/CMakeFiles/edit_cache.dir
+/home/study/projects/ChatRoom/build/CMakeFiles/rebuild_cache.dir
+/home/study/projects/ChatRoom/build/Gyanis/CMakeFiles/base.dir
+/home/study/projects/ChatRoom/build/Gyanis/CMakeFiles/core.dir
+/home/study/projects/ChatRoom/build/Gyanis/CMakeFiles/net.dir
+/home/study/projects/ChatRoom/build/Gyanis/CMakeFiles/db.dir
+/home/study/projects/ChatRoom/build/Gyanis/CMakeFiles/Gyanis.dir
+/home/study/projects/ChatRoom/build/Gyanis/CMakeFiles/edit_cache.dir
+/home/study/projects/ChatRoom/build/Gyanis/CMakeFiles/rebuild_cache.dir

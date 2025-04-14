@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyanis 聊天室</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .chat-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .message-item {
+            margin: 8px 0;
+            padding: 6px 12px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .system-message {
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="input-group">
+        <input type="text" id="tname" placeholder="输入昵称" required>
+        <button id="loginBtn">登录</button>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="msg" placeholder="输入消息" disabled>
+        <button id="sendBtn" disabled>发送</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<script>
+    (function () {
+        const MESSAGE_TYPES = {
+            LOGIN_REQUEST: 'login_request',
+            LOGIN_RESPONSE: 'login_response',
+            USER_ENTER: 'user_enter',
+            USER_LEAVE: 'user_leave',
+            MESSAGE: 'msg',
+            SEND_REQUEST: 'send_request'
+        };
+
+        let websocket = null;
+        const messageEl = document.getElementById('message');
+        const tnameInput = document.getElementById('tname');
+        const msgInput = document.getElementById('msg');
+        const loginBtn = document.getElementById('loginBtn');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function escapeHTML(str) {
+            return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function appendMessage(content, isSystem = false) {
+            const div = document.createElement('div');
+            div.className = `message-item ${isSystem ? 'system-message' : ''}`;
+            div.innerHTML = content;
+            messageEl.appendChild(div);
+            messageEl.scrollTop = messageEl.scrollHeight;
+        }
+
+        function handleMessage(e) {
+            try {
+                const data = JSON.parse(e.data);
+                const time = new Date(data.time).toLocaleTimeString();
+
+                switch (data.type) {
+                    case MESSAGE_TYPES.LOGIN_RESPONSE:
+                        msgInput.disabled = !data.result;
+                        sendBtn.disabled = !data.result;
+                        appendMessage(`系统消息：${data.msg}`, true);
+                        break;
+
+                    case MESSAGE_TYPES.USER_ENTER:
+                        appendMessage(`[${time}] 用户 <strong>${escapeHTML(data.name)}</strong> 加入聊天室`, true);
+                        break;
+
+                    case MESSAGE_TYPES.USER_LEAVE:
+                        appendMessage(`[${time}] 用户 <strong>${escapeHTML(data.name)}</strong> 离开聊天室`, true);
+                        break;
+
+                    case MESSAGE_TYPES.MESSAGE:
+                        appendMessage(
+                            `[${time}] <strong>${escapeHTML(data.name)}</strong>：${escapeHTML(data.msg)}`
+                        );
+                        break;
+                }
+            } catch (error) {
+                console.error('消息解析失败:', error);
+                appendMessage('系统消息：收到无效消息格式', true);
+            }
+        }
+
+        function initWebSocket() {
+            if (websocket) {
+                appendMessage('系统消息：请勿重复连接', true);
+                return;
+            }
+
+            websocket = new WebSocket("ws://10.70.233.54:8072/Gyanis/chat");
+
+            websocket.onopen = () => {
+                const payload = {
+                    type: MESSAGE_TYPES.LOGIN_REQUEST,
+                    name: tnameInput.value.trim()
+                };
+                websocket.send(JSON.stringify(payload));
+            };
+
+            websocket.onmessage = handleMessage;
+
+            websocket.onerror = (error) => {
+                console.error('WebSocket错误:', error);
+                appendMessage('系统消息：连接发生错误', true);
+            };
+
+            websocket.onclose = () => {
+                websocket = null;
+                msgInput.disabled = true;
+                sendBtn.disabled = true;
+                appendMessage('系统消息：连接已断开', true);
+            };
+        }
+
+        function sendMessage() {
+            if (!websocket || websocket.readyState !== WebSocket.OPEN) {
+                appendMessage('系统消息：尚未连接服务器', true);
+                return;
+            }
+
+            const message = msgInput.value.trim();
+            if (!message) return;
+
+            const payload = {
+                type: MESSAGE_TYPES.SEND_REQUEST,
+                msg: message
+            };
+
+            websocket.send(JSON.stringify(payload));
+            msgInput.value = '';
+            msgInput.focus();
+        }
+
+        // 事件绑定
+        loginBtn.addEventListener('click', () => {
+            if (!tnameInput.value.trim()) {
+                alert('请输入昵称');
+                return;
+            }
+            initWebSocket();
+        });
+
+        sendBtn.addEventListener('click', sendMessage);
+
+        msgInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    })();
+</script>
+</body>
+</html>
